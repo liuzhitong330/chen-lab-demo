@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive evidence map of cardiac interoception inspired by the Ritchie Chen Lab at UCSF.">
+  <title>Exploratory Analyses Inspired by the Chen Lab</title>
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+<main class="page">
+  <h1>Exploratory Analyses Inspired by the Chen Lab</h1>
+  <div class="byline">
+    Cathy Liu &nbsp;&middot;&nbsp; interoception and neural-circuit technology<br>
+    Prepared for the Ritchie Chen Lab, UCSF &nbsp;&middot;&nbsp; personal exploratory project, July 2026
+  </div>
+
+  <nav class="nav">
+    <a href="#motivation">Motivation</a><a href="#context">Context gate</a><a href="#brain">Brain map</a><a href="#relevance">Relevance</a><a href="#methods">Methods</a>
+  </nav>
+
+  <p class="lede">The Chen Lab builds tools to interrogate how signals from the body reach the brain and shape adaptive behavior. I assembled a compact, interactive evidence map around the open-access study <em>Cardiogenic control of affective behavioural state</em>, co-led by Ritchie Chen, to ask a focused question: when does an imposed cardiac signal become behaviorally meaningful, and where in the circuit can that influence be interrupted?</p>
+  <p>The paper used an AAV9-delivered, cardiomyocyte-restricted ChRmine pacemaker to raise heart rhythm noninvasively in freely moving mice. Its results form a layered story: pacing alone was not aversive, risk exposed an anxiety-like effect, central-autonomic regions responded, and posterior-insula inhibition attenuated the effect.</p>
+
+  <hr id="motivation">
+  <h2>How it works</h2>
+  <p>I transcribed the paper-reported sample sizes, post-hoc P values, anatomical labels, and intervention outcomes into a structured evidence table. The first view compares neutral, risky, and posterior-insula-inhibited scenarios. The second locates selected whole-brain and targeted Fos results on a schematic sagittal map. The goal is to make the causal logic inspectable, not to recreate unavailable animal-level measurements.</p>
+
+  <hr id="context">
+  <h2>Analysis 1 - A context gate for cardiac signals</h2>
+  <div class="experiment">
+    <div class="eyebrow">Interactive evidence path</div>
+    <h3>Same peripheral perturbation, different behavioral meaning</h3>
+    <p>Select a scenario to trace the reported heart-to-brain pathway and compare the assays that support it.</p>
+  </div>
+
+  <figure class="panel">
+    <div class="scenario-bar" role="group" aria-label="Evidence scenario">
+      <button type="button" data-scenario="neutral">Neutral context</button>
+      <button type="button" data-scenario="risk" class="active">Risky context</button>
+      <button type="button" data-scenario="rescue">pIC inhibited</button>
+    </div>
+    <svg id="circuitViz" class="viz" viewBox="0 0 700 305" role="img" aria-label="Heart-to-brain interoceptive circuit evidence diagram"></svg>
+    <div id="scenarioReadout" class="readout"></div>
+    <div id="evidenceList" class="evidence-list"></div>
+    <figcaption>Scenario summaries are descriptive and use the paper's reported statistics. Pacing was delivered at 900 bpm in 500-ms bouts every 2 seconds for the behavioral assays.</figcaption>
+  </figure>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric-value">P = 0.67</div><div class="metric-label">no place avoidance on the pacing side</div></div>
+    <div class="metric"><div class="metric-value">P = 0.0079</div><div class="metric-label">reduced open-arm exploration under risk</div></div>
+    <div class="metric"><div class="metric-value">6/6 vs 1/6</div><div class="metric-label">task completion with pIC inhibition vs control</div></div>
+  </div>
+
+  <hr id="brain">
+  <h2>Analysis 2 - Where does the cardiac signal register?</h2>
+  <div class="experiment">
+    <div class="eyebrow">Searchable anatomical evidence</div>
+    <h3>Central-autonomic regions stand out from sensory controls</h3>
+    <p>Search or click a labeled node. Color intensity follows the reported P value within its assay; outlined control regions were not significant in the brain-wide screen.</p>
+  </div>
+
+  <figure class="panel">
+    <div class="search-row">
+      <label for="regionSearch">Brain region</label>
+      <input id="regionSearch" list="regionList" value="Posterior insular cortex" autocomplete="off">
+      <datalist id="regionList"></datalist>
+      <button id="inspectRegion" type="button">Inspect</button>
+    </div>
+    <svg id="brainViz" class="viz" viewBox="0 0 700 385" role="img" aria-label="Schematic sagittal map of cardiac-pacing-responsive brain regions"></svg>
+    <div class="legend"><span style="--c:#df6a55">reported increase / significant</span><span style="--c:#c7cfdd">control region / not significant</span><span style="--c:#6752b7">targeted Fos relay result</span></div>
+    <div id="regionReadout" class="readout"></div>
+    <figcaption>The map is schematic, not stereotaxic. Brain-wide TRAP labels used n = 9 mice per group and Benjamini-Hochberg correction at FDR 10%. pIC, NTS, and LC values come from targeted Fos mRNA assays with n = 4 mice per group.</figcaption>
+  </figure>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric-value">8 regions</div><div class="metric-label">named as significant across prefrontal, insular, and brainstem systems</div></div>
+    <div class="metric"><div class="metric-value">619 units</div><div class="metric-label">391 ChRmine + 228 control insular neurons in population analysis</div></div>
+    <div class="metric"><div class="metric-value">P = 0.026</div><div class="metric-label">insular firing increase during pacing; P = 0.357 after pacing</div></div>
+  </div>
+
+  <div class="callout"><strong>A testable circuit gate:</strong> the structured results separate a peripheral signal from its behavioral interpretation. A 900-bpm rhythm was not sufficient for place avoidance or locomotor change, yet the same pacing altered exploration and reward seeking in risky contexts. Posterior-insula inhibition then shifted task completion from 1 of 6 controls to 6 of 6 inhibited mice, pointing to a cortical node where body state and environmental context converge.</div>
+
+  <hr id="relevance">
+  <h2>Why this matters for the lab</h2>
+  <p>The Specialist role joins molecular tools, in vivo physiology, electrophysiology, histology, and circuit manipulation. This map turns one published result into a practical experimental sequence: validate cell-type-specific perturbation, measure organ physiology, screen distributed neural responses, record a candidate hub, and perturb that hub during behavior. It also highlights the controls needed to distinguish a real interoceptive signal from heat, light, locomotor, or generalized aversion effects.</p>
+
+  <h2>What I would bring</h2>
+  <p>I would bring hands-on experience with mouse models, IVIS imaging, tissue collection, molecular and cellular assays, and careful GMP/SOP documentation, together with Python-based biological analysis. I am especially interested in helping connect reproducible wet-lab execution with transparent analysis across animal physiology, histology, and neural readouts.</p>
+
+  <hr id="methods">
+  <h2>Methods and limitations</h2>
+  <p>This is a structured secondary analysis of reported results, not a reanalysis of animal-level primary data. The article states that primary figure data are available from the corresponding author upon request; therefore, I did not infer group means, effect sizes, or individual trajectories from figure pixels. P values are displayed within their original assay context and should not be compared as if they came from one unified model. Anatomical node positions are illustrative.</p>
+  <ul class="source-list">
+    <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9995271/">Hsueh, Chen et al., Nature 2023</a> - open-access article, methods, sample sizes, statistics, and circuit findings.</li>
+    <li><a href="https://www.chenlab-ucsf.org/research">Chen Lab research page</a> - current framing of cardiac interoception, non-invasive optogenetics, nanoscale devices, and tissue chemistry.</li>
+    <li><a href="https://aprecruit.ucsf.edu/JPF05991">UCSF JPF05991</a> - Specialist role connecting in vivo and in vitro neural recording, stimulation, molecular biology, and lab operations.</li>
+  </ul>
+
+  <footer>
+    Cathy Liu<br>
+    MSc Biotechnology, University of Melbourne &nbsp;&middot;&nbsp; mouse models, molecular biology, Python
+  </footer>
+</main>
+<script src="data.js?v=1"></script>
+<script src="app.js?v=1"></script>
+</body>
+</html>
